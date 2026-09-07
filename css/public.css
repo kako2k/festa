@@ -103,3 +103,34 @@ main { padding: 26px 0 60px; }
   -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M20 20l-3.5-3.5'/></svg>") center/contain no-repeat;
   mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M20 20l-3.5-3.5'/></svg>") center/contain no-repeat;
 }
+
+/* ------------------------------------------------------------- Chave PIX */
+.pix-card {
+  background: linear-gradient(180deg, rgba(34,197,168,.07), transparent 75%), var(--surface);
+  border-color: rgba(34,197,168,.28);
+}
+.pix-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.pix-info { min-width: 0; }
+.pix-label {
+  font-size: .72rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-faint); font-weight: 600;
+}
+.pix-key {
+  font-family: var(--mono);
+  font-size: 1.05rem; font-weight: 600;
+  color: var(--pix);
+  margin-top: 5px;
+  word-break: break-all;
+  user-select: all;
+}
+#btn-copiar-pix { flex: none; transition: background .2s, border-color .2s, color .2s; }
+#btn-copiar-pix.copiado {
+  background: var(--success); border-color: var(--success); color: #05231a;
+}
+@media (max-width: 520px) {
+  .pix-inner { align-items: stretch; }
+  #btn-copiar-pix { width: 100%; }
+}
