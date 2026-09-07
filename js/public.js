@@ -207,3 +207,7 @@ carregar();
 
 // Atualiza sozinho a cada 60s (para telas deixadas abertas na festa)
 setInterval(carregar, 60000);
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) carregar();
+});
