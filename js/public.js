@@ -71,7 +71,56 @@ function renderCabecalho() {
     $('#mensagem-txt').textContent = c.mensagem;
     $('#mensagem-box').hidden = false;
   }
+
+  // Chave PIX (só aparece se estiver preenchida no painel)
+  if (c.chave_pix) {
+    $('#pix-key').textContent = c.chave_pix;
+    $('#pix-card').hidden = false;
+  } else {
+    $('#pix-card').hidden = true;
+  }
 }
+
+/* ------------------------------------------------------- Copiar chave PIX */
+
+async function copiarPix() {
+  const chave = estado.config.chave_pix || '';
+  if (!chave) return;
+
+  let ok = false;
+  try {
+    await navigator.clipboard.writeText(chave);
+    ok = true;
+  } catch {
+    // Fallback para navegadores antigos ou páginas sem HTTPS
+    const ta = document.createElement('textarea');
+    ta.value = chave;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:-1000px;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0, chave.length);
+    try { ok = document.execCommand('copy'); } catch { ok = false; }
+    ta.remove();
+  }
+
+  const txt = $('#btn-copiar-txt');
+  const btn = $('#btn-copiar-pix');
+  if (ok) {
+    txt.textContent = 'Copiado!';
+    btn.classList.add('copiado');
+    toast('Chave PIX copiada.', 'ok');
+  } else {
+    txt.textContent = 'Copie manualmente';
+    toast('Não consegui copiar. Selecione a chave e copie na mão.', 'err');
+  }
+  setTimeout(() => {
+    txt.textContent = 'Copiar chave';
+    btn.classList.remove('copiado');
+  }, 2200);
+}
+
+$('#btn-copiar-pix').addEventListener('click', copiarPix);
 
 function renderMeta() {
   const r = calcularResumo(estado.arrecadacao, estado.utilizacao, estado.config.meta_valor);
@@ -208,6 +257,7 @@ carregar();
 // Atualiza sozinho a cada 60s (para telas deixadas abertas na festa)
 setInterval(carregar, 60000);
 
+// ...e assim que a pessoa volta para a aba
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden) carregar();
 });
