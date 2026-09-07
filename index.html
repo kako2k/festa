@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrecadação — Festa de Fim de Ano</title>
+<meta name="description" content="Prestação de contas da arrecadação da festa de fim de ano.">
+<meta name="theme-color" content="#0f1117">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/public.css">
+</head>
+<body>
+
+<header class="site-header">
+  <img id="logo" class="logo" src="img/logo.png" alt="Logo do evento"
+       onerror="this.style.display='none'">
+  <h1 id="evento-nome">Festa de Fim de Ano</h1>
+  <p class="subtitle" id="evento-subtitulo">Prestação de contas da arrecadação</p>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <!-- ============================ META / PROGRESSO ============================ -->
+    <section class="card meta-card" id="sec-meta">
+      <div class="meta-top">
+        <div>
+          <div class="meta-valor" id="meta-arrecadado">R$ 0,00</div>
+          <div class="meta-de">de <b id="meta-alvo">R$ 0,00</b> pretendidos</div>
+        </div>
+        <div class="right">
+          <div class="meta-pct" id="meta-pct">0%</div>
+          <div class="faint">da meta atingida</div>
+        </div>
+      </div>
+
+      <div class="progress" id="meta-bar"><span></span></div>
+      <div class="progress-legend">
+        <span>Atingido: <b id="meta-pct-2">0%</b></span>
+        <span>Faltam: <b id="meta-falta">R$ 0,00</b> (<b id="meta-pct-restante">100%</b>)</span>
+      </div>
+
+      <div class="aviso" id="mensagem-box" hidden><span id="mensagem-txt"></span></div>
+    </section>
+
+    <!-- ================================ RESUMO ================================= -->
+    <section class="card">
+      <div class="card-head"><h2>Resumo financeiro</h2></div>
+      <div class="stats">
+        <div class="stat ok">
+          <div class="label">Total arrecadado</div>
+          <div class="value" id="r-arrecadado">R$ 0,00</div>
+        </div>
+        <div class="stat warn">
+          <div class="label">Valor utilizado</div>
+          <div class="value" id="r-utilizado">R$ 0,00</div>
+        </div>
+        <div class="stat">
+          <div class="label">Saldo em caixa</div>
+          <div class="value" id="r-saldo">R$ 0,00</div>
+        </div>
+        <div class="stat">
+          <div class="label">Ainda a pagar</div>
+          <div class="value" id="r-apagar">R$ 0,00</div>
+        </div>
+      </div>
+      <p class="faint" style="margin:12px 0 0" id="r-detalhe"></p>
+    </section>
+
+    <!-- ========================= UTILIZAÇÃO DE FUNDOS =========================== -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Utilização dos fundos</h2>
+        <span class="faint" id="uso-contador"></span>
+      </div>
+
+      <div style="margin-bottom:18px">
+        <div class="progress" id="uso-bar"><span></span></div>
+        <div class="progress-legend">
+          <span>Pago: <b id="uso-pago">R$ 0,00</b> (<b id="uso-pct">0%</b>)</span>
+          <span>Restante: <b id="uso-restante">R$ 0,00</b> (<b id="uso-pct-restante">100%</b>)</span>
+        </div>
+      </div>
+
+      <div class="uso-list" id="uso-list">
+        <div class="loading">Carregando…</div>
+      </div>
+    </section>
+
+    <!-- ============================== ARRECADAÇÃO ============================== -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Lançamentos da arrecadação</h2>
+        <div class="search-box">
+          <input type="text" id="busca" placeholder="Buscar…" autocomplete="off" aria-label="Buscar lançamento">
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Nome</th>
+              <th>Forma</th>
+              <th class="num">Valor</th>
+            </tr>
+          </thead>
+          <tbody id="tb-arrecadacao">
+            <tr><td colspan="4"><div class="loading">Carregando…</div></td></tr>
+          </tbody>
+          <tfoot id="tf-arrecadacao"></tfoot>
+        </table>
+      </div>
+      <p class="faint" id="nomes-aviso" style="margin:12px 0 0" hidden>
+        Os nomes dos contribuintes estão parcialmente ocultos por opção dos organizadores.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div>Atualizado em <span id="atualizado">—</span></div>
+  <div style="margin-top:6px"><a href="admin.html">Área do administrador</a></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/public.js"></script>
+</body>
+</html>

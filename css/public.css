@@ -1,0 +1,105 @@
+/* =====================================================================
+   public.css — página pública (index.html)
+   ===================================================================== */
+
+.site-header {
+  padding: 34px 18px 26px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-soft);
+  background: linear-gradient(180deg, rgba(240,180,41,.05), transparent);
+}
+.site-header .logo {
+  display: block;
+  margin: 0 auto 16px;
+  max-height: 110px;
+  max-width: min(260px, 70vw);
+  object-fit: contain;
+}
+.site-header h1 { margin: 0; font-size: clamp(1.5rem, 4.5vw, 2.1rem); }
+.site-header .subtitle { color: var(--text-dim); margin: 6px 0 0; font-size: .98rem; }
+
+main { padding: 26px 0 60px; }
+
+/* Meta em destaque */
+.meta-card {
+  background:
+    linear-gradient(180deg, rgba(240,180,41,.07), transparent 70%),
+    var(--surface);
+  border-color: rgba(240,180,41,.25);
+}
+.meta-top {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap; margin-bottom: 14px;
+}
+.meta-valor {
+  font-size: clamp(1.9rem, 6vw, 2.7rem);
+  font-weight: 750; letter-spacing: -.03em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+.meta-de { color: var(--text-dim); font-size: .95rem; margin-top: 4px; }
+.meta-pct {
+  font-size: 1.9rem; font-weight: 750; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.aviso {
+  background: rgba(96,165,250,.09);
+  border: 1px solid rgba(96,165,250,.25);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: .9rem;
+  color: #bfd7fb;
+  margin-top: 14px;
+}
+
+/* Itens de utilização */
+.uso-list { display: grid; gap: 12px; }
+.uso-item {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 15px 16px;
+}
+.uso-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 4px;
+}
+.uso-head h3 { margin: 0; font-size: .98rem; }
+.uso-desc { color: var(--text-dim); font-size: .87rem; margin: 0 0 11px; }
+.uso-numeros {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: .82rem; color: var(--text-dim); margin-top: 8px;
+}
+.uso-numeros b { color: var(--text); font-variant-numeric: tabular-nums; }
+.badge-quitado {
+  font-size: .7rem; font-weight: 700; letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--success);
+  background: rgba(52,211,153,.13);
+  border: 1px solid rgba(52,211,153,.3);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+/* Rodapé */
+.site-footer {
+  border-top: 1px solid var(--border-soft);
+  padding: 22px 18px 34px;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: .82rem;
+}
+.site-footer a { color: var(--text-dim); }
+
+/* Busca na tabela */
+.search-box { position: relative; max-width: 240px; }
+.search-box input { padding-left: 32px; }
+.search-box::before {
+  content: "";
+  position: absolute; left: 11px; top: 50%; width: 13px; height: 13px;
+  transform: translateY(-50%);
+  background: var(--text-faint);
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M20 20l-3.5-3.5'/></svg>") center/contain no-repeat;
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'><circle cx='11' cy='11' r='7'/><path d='M20 20l-3.5-3.5'/></svg>") center/contain no-repeat;
+}

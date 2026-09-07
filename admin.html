@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel Admin — Arrecadação</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1117">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+<!-- ============================== TELA DE LOGIN ============================== -->
+<div class="login-screen" id="tela-login">
+  <form class="login-box" id="form-login" autocomplete="on">
+    <img class="logo" src="img/logo.png" alt="" onerror="this.style.display='none'">
+    <h1>Painel administrativo</h1>
+    <p class="sub">Acesso restrito aos organizadores</p>
+
+    <div class="login-erro" id="login-erro" hidden></div>
+
+    <div class="field">
+      <label for="usuario">Usuário</label>
+      <input type="text" id="usuario" name="username" required autocomplete="username" autocapitalize="none" spellcheck="false">
+    </div>
+    <div class="field">
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="password" required autocomplete="current-password">
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" id="btn-entrar">Entrar</button>
+
+    <p class="faint center" style="margin:16px 0 0">
+      <a href="index.html">← Voltar para a página pública</a>
+    </p>
+  </form>
+</div>
+
+<!-- ================================= PAINEL ================================= -->
+<div id="tela-painel" hidden>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">Painel de arrecadação<small id="brand-evento">—</small></div>
+      <div class="spacer"></div>
+      <span class="who" id="who"></span>
+      <a class="btn btn-sm btn-ghost" href="index.html" target="_blank" rel="noopener">Ver página</a>
+      <button class="btn btn-sm btn-ghost" id="btn-sair">Sair</button>
+    </div>
+  </div>
+
+  <main class="admin">
+    <div class="wrap">
+
+      <!-- Resumo rápido -->
+      <div class="stats" style="margin-bottom:22px">
+        <div class="stat ok">   <div class="label">Arrecadado</div>    <div class="value" id="k-arrecadado">—</div></div>
+        <div class="stat warn"> <div class="label">Utilizado</div>     <div class="value" id="k-utilizado">—</div></div>
+        <div class="stat">      <div class="label">Saldo</div>         <div class="value" id="k-saldo">—</div></div>
+        <div class="stat">      <div class="label">Meta atingida</div> <div class="value" id="k-meta">—</div></div>
+      </div>
+
+      <nav class="tabs" id="tabs">
+        <button data-tab="arrecadacao" class="active">Arrecadação</button>
+        <button data-tab="utilizacao">Utilização de fundos</button>
+        <button data-tab="config">Configurações</button>
+      </nav>
+
+      <!-- ========================= ABA: ARRECADAÇÃO ========================= -->
+      <section id="tab-arrecadacao">
+        <div class="card">
+          <div class="card-head"><h2>Novo lançamento</h2></div>
+
+          <form class="form-inline" id="form-arrecadacao">
+            <input type="hidden" id="a-id">
+            <div class="row">
+              <div class="field">
+                <label for="a-data">Data</label>
+                <input type="date" id="a-data" required>
+              </div>
+              <div class="field">
+                <label for="a-nome">Nome</label>
+                <input type="text" id="a-nome" required placeholder="Nome de quem contribuiu" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="a-valor">Valor (R$)</label>
+                <input type="text" id="a-valor" required placeholder="0,00" inputmode="decimal" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="a-forma">Forma</label>
+                <select id="a-forma" required>
+                  <option value="pix">PIX</option>
+                  <option value="dinheiro">Dinheiro</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="a-obs">Observação (opcional, não aparece na página pública)</label>
+              <input type="text" id="a-obs" placeholder="Ex.: 2ª parcela" autocomplete="off">
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="a-submit">Adicionar lançamento</button>
+              <button type="button" class="btn btn-ghost" id="a-cancelar" hidden>Cancelar edição</button>
+            </div>
+          </form>
+
+          <div class="card-head" style="margin-top:6px">
+            <h2>Lançamentos</h2>
+            <span class="faint" id="a-contador"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th><th>Nome</th><th>Forma</th>
+                  <th class="num">Valor</th><th>Obs.</th><th></th>
+                </tr>
+              </thead>
+              <tbody id="tb-arrecadacao"><tr><td colspan="6"><div class="loading">Carregando…</div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================= ABA: UTILIZAÇÃO ========================= -->
+      <section id="tab-utilizacao" hidden>
+        <div class="card">
+          <div class="card-head"><h2>Novo item de utilização</h2></div>
+
+          <form class="form-inline" id="form-utilizacao">
+            <input type="hidden" id="u-id">
+            <div class="row">
+              <div class="field" style="grid-column: span 2">
+                <label for="u-titulo">Título</label>
+                <input type="text" id="u-titulo" required placeholder="Ex.: Buffet" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="u-valor">Valor previsto (R$)</label>
+                <input type="text" id="u-valor" required placeholder="0,00" inputmode="decimal" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="u-pago">Valor já pago (R$)</label>
+                <input type="text" id="u-pago" placeholder="0,00" inputmode="decimal" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="u-ordem">Ordem</label>
+                <input type="number" id="u-ordem" value="0" step="1">
+              </div>
+            </div>
+            <div class="field">
+              <label for="u-descricao">Descrição</label>
+              <textarea id="u-descricao" placeholder="Detalhes do que será pago"></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="u-submit">Adicionar item</button>
+              <button type="button" class="btn btn-ghost" id="u-cancelar" hidden>Cancelar edição</button>
+            </div>
+          </form>
+
+          <div class="card-head" style="margin-top:6px">
+            <h2>Itens cadastrados</h2>
+            <span class="faint" id="u-contador"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th class="num">Previsto</th>
+                  <th class="num">Pago</th>
+                  <th class="num">Restante</th>
+                  <th>Progresso</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tb-utilizacao"><tr><td colspan="6"><div class="loading">Carregando…</div></td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================= ABA: CONFIGURAÇÕES ======================= -->
+      <section id="tab-config" hidden>
+        <div class="card">
+          <div class="card-head"><h2>Configurações do evento</h2></div>
+
+          <form id="form-config">
+            <div class="row">
+              <div class="field">
+                <label for="c-nome">Nome do evento</label>
+                <input type="text" id="c-nome" placeholder="Festa de Fim de Ano">
+              </div>
+              <div class="field">
+                <label for="c-subtitulo">Subtítulo</label>
+                <input type="text" id="c-subtitulo" placeholder="Prestação de contas da arrecadação">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <label for="c-meta">Pretensão de arrecadação (R$)</label>
+                <input type="text" id="c-meta" placeholder="0,00" inputmode="decimal">
+                <div class="hint">Usada na barra de progresso da página pública. Deixe 0 para ocultar.</div>
+              </div>
+              <div class="field">
+                <label for="c-pix">Chave PIX (opcional)</label>
+                <input type="text" id="c-pix" placeholder="chave@exemplo.com">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="c-mensagem">Recado na página pública (opcional)</label>
+              <textarea id="c-mensagem" placeholder="Ex.: Contribuições até 15/12. Chave PIX: ..."></textarea>
+            </div>
+
+            <div class="field">
+              <label for="c-logo">Logo do cabeçalho</label>
+              <select id="c-logo"></select>
+              <div class="hint">
+                As opções vêm da pasta <code>img/</code> do projeto. Para usar outra imagem,
+                envie o arquivo para <code>img/</code> e acrescente o nome na lista em
+                <code>js/admin.js</code> (constante <code>LOGOS_DISPONIVEIS</code>),
+                ou digite um endereço completo no campo abaixo.
+              </div>
+              <input type="text" id="c-logo-url" placeholder="ou cole aqui uma URL / caminho personalizado" style="margin-top:8px">
+              <img class="logo-preview" id="c-logo-preview" alt="Pré-visualização do logo" onerror="this.style.opacity=.25">
+            </div>
+
+            <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+
+            <div class="field">
+              <label style="margin-bottom:9px">Exibição dos nomes na página pública</label>
+              <label class="switch">
+                <input type="checkbox" id="c-mostrar-nomes">
+                <span class="track"></span>
+                <span class="switch-label" id="c-mostrar-label">Mostrar nomes completos</span>
+              </label>
+              <div class="hint">
+                Quando desligado, a página pública mostra apenas as 3 primeiras letras
+                e substitui o restante por <code>*</code>. Exemplo:
+                <b id="c-exemplo">João Silva</b>
+              </div>
+            </div>
+
+            <div class="form-actions" style="margin-top:20px">
+              <button type="submit" class="btn btn-primary">Salvar configurações</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
