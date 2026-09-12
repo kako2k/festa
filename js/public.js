@@ -89,6 +89,14 @@ function renderCabecalho() {
   } else {
     $('#pix-card').hidden = true;
   }
+
+  // Chave PIX (só aparece se estiver preenchida no painel)
+  if (c.chave_pix) {
+    $('#pix-key').textContent = c.chave_pix;
+    $('#pix-card').hidden = false;
+  } else {
+    $('#pix-card').hidden = true;
+  }
 }
 
 /* ------------------------------------------------------- Copiar chave PIX */

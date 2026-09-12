@@ -13,8 +13,8 @@
    NUNCA coloque aqui a chave "service_role".
    ===================================================================== */
 
-const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-const SUPABASE_ANON_KEY = 'SUA-CHAVE-ANON-AQUI';
+const SUPABASE_URL = 'https://ykeicpyamgtjsyvoedef.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrZWljcHlhbWd0anN5dm9lZGVmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MDc2MTMsImV4cCI6MjEwNDM4MzYxM30.ZYLa7C314NLpx7J-878oJasn3eHK44btpnOuZk_2Vk0';
 
 /* --------------------------------------------------------------------- */
 
