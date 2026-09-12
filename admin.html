@@ -11,6 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/public.css">
 <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
@@ -58,71 +59,75 @@
     <div class="wrap">
 
       <!-- Resumo rápido -->
-      <div class="stats" style="margin-bottom:22px">
+      <div class="stats" style="margin-bottom:18px">
         <div class="stat ok">   <div class="label">Arrecadado</div>    <div class="value" id="k-arrecadado">—</div></div>
         <div class="stat warn"> <div class="label">Utilizado</div>     <div class="value" id="k-utilizado">—</div></div>
         <div class="stat">      <div class="label">Saldo</div>         <div class="value" id="k-saldo">—</div></div>
         <div class="stat">      <div class="label">Meta atingida</div> <div class="value" id="k-meta">—</div></div>
       </div>
 
+      <div class="legenda" id="k-legenda" style="margin-bottom:20px;border:0;padding:0"></div>
+
       <nav class="tabs" id="tabs">
-        <button data-tab="arrecadacao" class="active">Arrecadação</button>
+        <button data-tab="pessoas" class="active">Contribuintes</button>
         <button data-tab="utilizacao">Utilização de fundos</button>
         <button data-tab="config">Configurações</button>
       </nav>
 
-      <!-- ========================= ABA: ARRECADAÇÃO ========================= -->
-      <section id="tab-arrecadacao">
+      <!-- ========================== ABA: CONTRIBUINTES ========================= -->
+      <section id="tab-pessoas">
         <div class="card">
-          <div class="card-head"><h2>Novo lançamento</h2></div>
+          <div class="card-head">
+            <h2>Cadastrar pessoa</h2>
+            <span class="faint">Cadastre todo mundo agora — quem não pagou fica em R$ 0,00</span>
+          </div>
 
-          <form class="form-inline" id="form-arrecadacao">
-            <input type="hidden" id="a-id">
+          <form class="form-inline" id="form-pessoa">
+            <input type="hidden" id="p-id">
             <div class="row">
-              <div class="field">
-                <label for="a-data">Data</label>
-                <input type="date" id="a-data" required>
+              <div class="field" style="grid-column: span 2">
+                <label for="p-nome">Nome</label>
+                <input type="text" id="p-nome" required placeholder="Nome completo" autocomplete="off">
               </div>
               <div class="field">
-                <label for="a-nome">Nome</label>
-                <input type="text" id="a-nome" required placeholder="Nome de quem contribuiu" autocomplete="off">
+                <label for="p-previsto">Valor previsto (R$)</label>
+                <input type="text" id="p-previsto" placeholder="usa o padrão" inputmode="decimal" autocomplete="off">
+                <div class="hint">Deixe vazio para usar o valor por pessoa das configurações.</div>
               </div>
               <div class="field">
-                <label for="a-valor">Valor (R$)</label>
-                <input type="text" id="a-valor" required placeholder="0,00" inputmode="decimal" autocomplete="off">
-              </div>
-              <div class="field">
-                <label for="a-forma">Forma</label>
-                <select id="a-forma" required>
-                  <option value="pix">PIX</option>
-                  <option value="dinheiro">Dinheiro</option>
-                </select>
+                <label for="p-ordem">Ordem</label>
+                <input type="number" id="p-ordem" value="0" step="1">
               </div>
             </div>
             <div class="field">
-              <label for="a-obs">Observação (opcional, não aparece na página pública)</label>
-              <input type="text" id="a-obs" placeholder="Ex.: 2ª parcela" autocomplete="off">
+              <label for="p-obs">Observação interna (não aparece na página pública)</label>
+              <input type="text" id="p-obs" placeholder="Ex.: vai pagar em 2x" autocomplete="off">
             </div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary" id="a-submit">Adicionar lançamento</button>
-              <button type="button" class="btn btn-ghost" id="a-cancelar" hidden>Cancelar edição</button>
+              <button type="submit" class="btn btn-primary" id="p-submit">Cadastrar pessoa</button>
+              <button type="button" class="btn btn-ghost" id="p-cancelar" hidden>Cancelar edição</button>
+              <button type="button" class="btn btn-ghost" id="btn-varios">Cadastrar vários de uma vez</button>
             </div>
           </form>
 
           <div class="card-head" style="margin-top:6px">
-            <h2>Lançamentos</h2>
-            <span class="faint" id="a-contador"></span>
+            <h2>Pessoas cadastradas</h2>
+            <span class="faint" id="p-contador"></span>
           </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Data</th><th>Nome</th><th>Forma</th>
-                  <th class="num">Valor</th><th>Obs.</th><th></th>
+                  <th>Nome</th>
+                  <th class="num">Contribuído</th>
+                  <th class="num">Previsto</th>
+                  <th class="num">Falta</th>
+                  <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
-              <tbody id="tb-arrecadacao"><tr><td colspan="6"><div class="loading">Carregando…</div></td></tr></tbody>
+              <tbody id="tb-pessoas"><tr><td colspan="6"><div class="loading">Carregando…</div></td></tr></tbody>
             </table>
           </div>
         </div>
@@ -207,7 +212,12 @@
               <div class="field">
                 <label for="c-meta">Pretensão de arrecadação (R$)</label>
                 <input type="text" id="c-meta" placeholder="0,00" inputmode="decimal">
-                <div class="hint">Usada na barra de progresso da página pública. Deixe 0 para ocultar.</div>
+                <div class="hint">Meta geral da barra de progresso. Deixe 0 para ocultar.</div>
+              </div>
+              <div class="field">
+                <label for="c-por-pessoa">Valor esperado por pessoa (R$)</label>
+                <input type="text" id="c-por-pessoa" placeholder="3000,00" inputmode="decimal">
+                <div class="hint">Base do status de cada contribuinte. Vale para quem não tem valor próprio.</div>
               </div>
               <div class="field">
                 <label for="c-pix">Chave PIX (opcional)</label>
@@ -217,23 +227,37 @@
 
             <div class="field">
               <label for="c-mensagem">Recado na página pública (opcional)</label>
-              <textarea id="c-mensagem" placeholder="Ex.: Contribuições até 15/12. Chave PIX: ..."></textarea>
+              <textarea id="c-mensagem" placeholder="Ex.: Contribuições até 15/12."></textarea>
             </div>
+
+            <hr class="sep">
+
+            <h3 style="margin-bottom:4px">Cores e nomes dos status</h3>
+            <p class="hint" style="margin:0 0 14px">
+              Cada pessoa recebe uma cor conforme quanto já contribuiu em relação ao valor esperado.
+            </p>
+
+            <div class="cores-grid" id="cores-grid"></div>
+
+            <div class="form-actions" style="margin-top:10px">
+              <button type="button" class="btn btn-ghost btn-sm" id="btn-cores-padrao">Voltar às cores padrão</button>
+            </div>
+
+            <hr class="sep">
 
             <div class="field">
               <label for="c-logo">Logo do cabeçalho</label>
               <select id="c-logo"></select>
               <div class="hint">
-                As opções vêm da pasta <code>img/</code> do projeto. Para usar outra imagem,
-                envie o arquivo para <code>img/</code> e acrescente o nome na lista em
-                <code>js/admin.js</code> (constante <code>LOGOS_DISPONIVEIS</code>),
-                ou digite um endereço completo no campo abaixo.
+                As opções vêm da pasta <code>img/</code>. Para usar outra imagem, envie o arquivo
+                para <code>img/</code> e acrescente o nome em <code>LOGOS_DISPONIVEIS</code>
+                (topo de <code>js/admin.js</code>), ou cole um endereço completo abaixo.
               </div>
               <input type="text" id="c-logo-url" placeholder="ou cole aqui uma URL / caminho personalizado" style="margin-top:8px">
               <img class="logo-preview" id="c-logo-preview" alt="Pré-visualização do logo" onerror="this.style.opacity=.25">
             </div>
 
-            <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+            <hr class="sep">
 
             <div class="field">
               <label style="margin-bottom:9px">Exibição dos nomes na página pública</label>

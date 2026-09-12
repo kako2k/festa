@@ -85,26 +85,6 @@ main.admin { padding: 22px 0 70px; }
 
 .acoes { display: flex; gap: 6px; justify-content: flex-end; }
 
-/* ---------------------------------------------------- Edição em modal */
-.modal-backdrop {
-  position: fixed; inset: 0; z-index: 100;
-  background: rgba(0,0,0,.62);
-  display: grid; place-items: center;
-  padding: 20px;
-  animation: fade .15s ease-out;
-}
-@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
-.modal {
-  width: 100%; max-width: 460px;
-  max-height: 88vh; overflow-y: auto;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: 0 20px 60px -20px rgba(0,0,0,.8);
-  padding: 22px;
-}
-.modal h2 { font-size: 1.05rem; margin-bottom: 16px; }
-
 /* Barra de progresso pequena dentro da tabela */
 .mini-prog { min-width: 110px; }
 .mini-prog .progress { height: 7px; }
@@ -120,4 +100,66 @@ main.admin { padding: 22px 0 70px; }
   border-radius: var(--radius-sm);
   padding: 9px;
   margin-top: 8px;
+}
+
+/* --------------------------------------------------- Modal largo (contribuições) */
+.modal-lg { max-width: 620px; }
+.modal-lg .form-inline { margin-bottom: 14px; }
+.modal-lg .form-inline h3 { margin-bottom: 10px; }
+
+/* ----------------------------------------------------- Cores dos status */
+.sep { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+
+.cores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+.cor-item {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+}
+.cor-topo { display: flex; gap: 8px; align-items: center; margin-bottom: 9px; }
+
+.cor-input {
+  flex: none;
+  width: 42px; height: 34px; padding: 2px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-soft);
+  cursor: pointer;
+}
+.cor-input::-webkit-color-swatch-wrapper { padding: 0; }
+.cor-input::-webkit-color-swatch { border: 0; border-radius: 5px; }
+.cor-input::-moz-color-swatch { border: 0; border-radius: 5px; }
+
+.cor-hex {
+  font-family: var(--mono);
+  font-size: .82rem !important;
+  text-transform: lowercase;
+  padding: 7px 9px !important;
+}
+.cor-rotulo { font-size: .88rem !important; padding: 7px 9px !important; }
+
+.cor-exemplo {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 10px;
+  padding: 3px 10px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.cor-exemplo .dot { margin: 0; }
+
+/* Linha colorida na tabela de pessoas do painel */
+#tb-pessoas tr.st-nao-doou td:first-child { box-shadow: inset 2px 0 0 var(--st-nao-doou); }
+#tb-pessoas tr.st-parcial  td:first-child { box-shadow: inset 2px 0 0 var(--st-parcial); }
+#tb-pessoas tr.st-total    td:first-child { box-shadow: inset 2px 0 0 var(--st-total); }
+#tb-pessoas tr.st-especial td:first-child { box-shadow: inset 2px 0 0 var(--st-especial); }
+
+@media (max-width: 560px) {
+  .modal-lg { max-width: 100%; }
 }

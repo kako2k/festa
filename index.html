@@ -47,6 +47,24 @@
       <div class="aviso" id="mensagem-box" hidden><span id="mensagem-txt"></span></div>
     </section>
 
+    <!-- =============================== CHAVE PIX =============================== -->
+    <section class="card pix-card" id="pix-card" hidden>
+      <div class="pix-inner">
+        <div class="pix-info">
+          <div class="pix-label">Chave PIX para contribuir</div>
+          <div class="pix-key" id="pix-key">—</div>
+        </div>
+        <button type="button" class="btn btn-primary" id="btn-copiar-pix">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="12" height="12" rx="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          <span id="btn-copiar-txt">Copiar chave</span>
+        </button>
+      </div>
+    </section>
+
     <!-- ================================ RESUMO ================================= -->
     <section class="card">
       <div class="card-head"><h2>Resumo financeiro</h2></div>
@@ -71,6 +89,22 @@
       <p class="faint" style="margin:12px 0 0" id="r-detalhe"></p>
     </section>
 
+    <!-- ============================== CONTRIBUINTES ============================= -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Contribuintes</h2>
+        <span class="faint" id="pessoas-contador"></span>
+      </div>
+
+      <div class="legenda" id="legenda"></div>
+
+      <div class="filtros-status" id="filtros-status"></div>
+
+      <div class="pessoas-grid" id="pessoas-grid">
+        <div class="loading">Carregando…</div>
+      </div>
+    </section>
+
     <!-- ========================= UTILIZAÇÃO DE FUNDOS =========================== -->
     <section class="card">
       <div class="card-head">
@@ -91,7 +125,7 @@
       </div>
     </section>
 
-    <!-- ============================== ARRECADAÇÃO ============================== -->
+    <!-- ============================== LANÇAMENTOS ============================== -->
     <section class="card">
       <div class="card-head">
         <h2>Lançamentos da arrecadação</h2>

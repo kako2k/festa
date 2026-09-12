@@ -25,7 +25,8 @@ festa-fundos/
 │   ├── logo.svg            Versão vetorial do exemplo
 │   └── favicon.svg
 ├── sql/
-│   └── schema.sql          Banco completo — rode no SQL Editor do Supabase
+│   ├── schema.sql          Banco completo — instalação NOVA
+│   └── migracao-pessoas.sql Atualiza um banco que já existe
 ├── tests/
 │   └── utils.test.js       Testes dos cálculos (node tests/utils.test.js)
 ├── vercel.json
@@ -41,6 +42,9 @@ festa-fundos/
 1. Acesse [supabase.com](https://supabase.com) → **New project** (região: São Paulo).
 2. Abra **SQL Editor** → **New query**.
 3. Cole **todo o conteúdo de `sql/schema.sql`** e clique em **Run**.
+   *(Se você já tinha rodado a versão anterior e tem dados, rode
+   `sql/migracao-pessoas.sql` no lugar — ele cria as tabelas novas e
+   transfere os lançamentos antigos sem apagar nada.)*
 4. **Troque a senha do admin.** No fim do arquivo existe a linha:
 
    ```sql
@@ -122,27 +126,42 @@ Abrir os arquivos com duplo clique (`file://`) não funciona bem — use um serv
 
 | Aba | O que faz |
 |---|---|
-| **Arrecadação** | Lança `Data · Nome · Valor · Forma (PIX/Dinheiro)`. Editar e excluir na própria tabela. O campo *Observação* é interno — não aparece na página pública. |
+| **Contribuintes** | Cadastra as pessoas e registra as contribuições de cada uma. |
 | **Utilização de fundos** | Cadastra `Título · Descrição · Valor previsto · Valor pago`. O *valor restante* e o *%* são calculados sozinhos. O campo *Ordem* define a sequência na página pública. |
-| **Configurações** | Nome/subtítulo do evento, **pretensão de arrecadação** (meta), recado público, chave PIX, logo e a chave **mostrar/ocultar nomes**. |
+| **Configurações** | Nome do evento, meta geral, **valor esperado por pessoa**, recado, chave PIX, **cores e nomes dos status**, logo e a chave mostrar/ocultar nomes. |
 
-### A chave de ocultar nomes
+### O fluxo dos contribuintes
 
-Quando desligada, a página pública mostra só as **3 primeiras letras** e troca o resto por `*`,
-preservando os espaços:
+1. **Cadastre todo mundo de uma vez.** Use o botão *Cadastrar vários de uma vez*
+   e cole a lista de nomes, um por linha. Todos entram com **R$ 0,00** e ficam
+   vermelhos na página pública.
+2. **Quando alguém pagar**, clique em **Contribuições** na linha dessa pessoa e registre
+   a data, o valor e a forma. O total e a cor se atualizam na hora.
+3. Se a pessoa pagar **em parcelas**, é só registrar uma contribuição por parcela — elas
+   somam e a cor acompanha. O botão *Lançar o valor que falta* já preenche o
+   restante para você.
+4. Na página pública, o **ícone de olho** no cartão da pessoa abre a lista de
+   datas e valores de cada contribuição dela.
 
-| Nome real | Exibido |
-|---|---|
-| João Silva | `Joã* *****` |
-| Maria de Souza | `Mar** ** *****` |
-| Ana | `Ana` (3 letras ou menos ficam inteiras) |
+### As quatro cores
 
-O mascaramento é aplicado antes de qualquer busca na página pública, então o nome real
-não vaza pelo campo de pesquisa. Ainda assim, os nomes completos trafegam do banco para o
-navegador — se você quiser sigilo forte (e não apenas discrição), avise que eu troco isso
-por uma *view* no banco que já entrega o nome mascarado.
+O status sai da comparação entre o que a pessoa já contribuiu e o **valor esperado por
+pessoa** (padrão R$ 3.000,00):
 
----
+| Cor padrão | Status | Quando |
+|---|---|---|
+| 🔴 Vermelho | Não contribuiu | ainda não pagou nada |
+| 🟡 Amarelo | Parcial | pagou parte do valor |
+| 🟢 Verde | Completo | pagou o valor esperado |
+| 🔵 Azul | Especial | pagou acima do valor esperado |
+
+As quatro cores e os quatro nomes são editáveis em **Configurações → Cores e nomes
+dos status**. A pré-visualização muda enquanto você escolhe; clique em *Salvar
+configurações* para valer na página pública.
+
+**Exceções individuais:** se alguém combinou um valor diferente (metade, o dobro),
+preencha o campo *Valor previsto* no cadastro daquela pessoa. Deixando vazio, ela
+usa o valor padrão das configurações.
 
 ## Segurança — o que está e o que não está protegido
 
@@ -169,7 +188,9 @@ node tests/utils.test.js
 ```
 
 Cobre máscara de nomes, formatação de moeda e data, conversão de valores digitados
-(`1.234,56`), percentuais com divisão por zero e o resumo financeiro completo.
+(`1.234,56`), percentuais com divisão por zero, o cálculo dos quatro status
+(incluindo os limites de 1 centavo), o agrupamento de pessoas com várias contribuições,
+valores previstos individuais e o resumo financeiro completo.
 
 ---
 
@@ -179,7 +200,7 @@ Cobre máscara de nomes, formatação de moeda e data, conversão de valores dig
 |---|---|
 | Mudar as cores | `css/style.css`, bloco `:root` (`--accent` é o dourado) |
 | Mudar o intervalo de atualização automática da página pública | fim de `js/public.js` (`setInterval(carregar, 60000)`) |
-| Adicionar outra forma de pagamento | `check (forma in (...))` em `sql/schema.sql` + `<select id="a-forma">` em `admin.html` |
+| Adicionar outra forma de pagamento | `check (forma in (...))` em `sql/schema.sql` + o `<select>` de forma em `js/admin.js` |
+| Mudar o valor esperado por pessoa | Configurações no painel (ou `valor_por_pessoa` na tabela `config`) |
+| Mudar as cores dos status | Configurações no painel — não precisa mexer em código |
 | Mudar quantas letras ficam visíveis | função `mascararNome` em `js/utils.js` (`visiveis < 3`) |
-"# festa" 
-"# festa" 
