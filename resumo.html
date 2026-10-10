@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resumo para compartilhar — Arrecadação</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1117">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/resumo.css">
+</head>
+<body class="resumo-body">
+
+<!-- ====================== CONTROLES (não entram no print) ================= -->
+<div class="controles" id="controles">
+  <div class="controles-linha">
+    <div class="segmented" id="seletor">
+      <button data-vista="financeiro" class="ativo">Financeiro</button>
+      <button data-vista="ranking">Ranking</button>
+      <button data-vista="completo">Os dois</button>
+    </div>
+  </div>
+
+  <div class="controles-linha">
+    <label class="switch">
+      <input type="checkbox" id="sw-nomes" checked>
+      <span class="track"></span>
+      <span class="switch-label">Mostrar nomes</span>
+    </label>
+
+    <label class="switch">
+      <input type="checkbox" id="sw-zerados" checked>
+      <span class="track"></span>
+      <span class="switch-label">Incluir quem não contribuiu</span>
+    </label>
+  </div>
+
+  <div class="controles-linha">
+    <button class="btn btn-primary" id="btn-baixar">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M4 21h16"/>
+      </svg>
+      <span id="btn-baixar-txt">Baixar imagem</span>
+    </button>
+    <button class="btn btn-ghost" id="btn-copiar">Copiar imagem</button>
+    <a class="btn btn-ghost" href="index.html">← Página pública</a>
+  </div>
+
+  <p class="dica">
+    Dica: no celular, use <b>Baixar imagem</b> e mande o arquivo no grupo — sai mais nítido que um print.
+  </p>
+</div>
+
+<!-- ============================ O CARTÃO (vira imagem) =================== -->
+<div class="palco">
+  <div class="card-print" id="card">
+    <div class="loading">Carregando…</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/resumo.js"></script>
+</body>
+</html>

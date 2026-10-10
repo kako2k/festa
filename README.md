@@ -11,14 +11,17 @@ Sistema de prestação de contas com **página pública** (só leitura) e **pain
 festa-fundos/
 ├── index.html              Página pública
 ├── admin.html              Painel administrativo
+├── resumo.html             Cartão de resumo para postar no WhatsApp
 ├── css/
 │   ├── style.css           Tokens, componentes e base (compartilhado)
 │   ├── public.css          Estilos da página pública
+│   ├── resumo.css          Estilos do cartão de resumo
 │   └── admin.css           Estilos do painel
 ├── js/
 │   ├── supabase-config.js  ⚠️ ÚNICO ARQUIVO A EDITAR (URL + chave anon)
 │   ├── utils.js            Formatação, máscara de nomes, cálculos
 │   ├── public.js           Lógica da página pública
+│   ├── resumo.js           Lógica do cartão de resumo
 │   └── admin.js            Lógica do painel
 ├── img/
 │   ├── logo.png            Logo do cabeçalho (troque por a sua)
@@ -162,6 +165,42 @@ configurações* para valer na página pública.
 **Exceções individuais:** se alguém combinou um valor diferente (metade, o dobro),
 preencha o campo *Valor previsto* no cadastro daquela pessoa. Deixando vazio, ela
 usa o valor padrão das configurações.
+
+## Resumo para o WhatsApp
+
+Abra `/resumo.html` (ou clique em **Resumo** na barra do painel). A página monta um
+cartão no formato de tela de celular, pronto para mandar no grupo.
+
+**Três vistas**, no seletor do topo:
+
+| Vista | O que mostra |
+|---|---|
+| **Financeiro** | Total arrecadado com barra da meta, já pago, saldo, a pagar, contagem por status e a lista de para onde o dinheiro vai |
+| **Ranking** | Todo mundo ordenado por quem mais contribuiu, com a cor do status |
+| **Os dois** | Financeiro + ranking no mesmo cartão |
+
+**Duas chaves**, que valem só para a imagem e não mexem no banco:
+
+- *Mostrar nomes* — começa como está configurado na página pública, mas você pode
+  ligar para o grupo (onde todo mundo se conhece) sem desligar a máscara do site.
+- *Incluir quem não contribuiu* — some com as linhas zeradas quando você quer um
+  cartão mais curto, ou só de bom humor.
+
+**Baixar imagem** gera um PNG em 3× (mais nítido que um print) e **Copiar imagem**
+joga direto na área de transferência, para colar no WhatsApp sem passar por arquivo.
+A cópia só funciona em navegador que suporta — se falhar, o aviso aparece e você usa
+o download.
+
+O ranking se adapta sozinho: até 14 pessoas vai em uma coluna com o nome inteiro;
+acima disso passa para duas colunas e usa só o primeiro nome, acrescentando a inicial
+do sobrenome quando dois têm o mesmo primeiro nome.
+
+> `resumo.html` mostra os mesmos dados que já são públicos, então pode ser
+> compartilhado à vontade. Ele não está linkado no rodapé do site — se quiser deixar
+> à mão para todo mundo, acrescente `<a href="resumo.html">Resumo</a>` no rodapé
+> do `index.html`.
+
+---
 
 ## Segurança — o que está e o que não está protegido
 

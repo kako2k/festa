@@ -1,0 +1,254 @@
+/* =====================================================================
+   resumo.css — página de resumo para compartilhar (print / imagem)
+   ===================================================================== */
+
+.resumo-body {
+  padding: 20px 14px 50px;
+  background-image: none;
+}
+
+/* =====================================================================
+   CONTROLES — ficam de fora da imagem gerada
+   ===================================================================== */
+
+.controles {
+  max-width: 420px;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.controles-linha { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+.segmented {
+  display: flex;
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 3px;
+}
+.segmented button {
+  flex: 1;
+  font: inherit; font-size: .85rem; font-weight: 600;
+  padding: 8px 6px;
+  border: 0; border-radius: 6px;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.segmented button:hover { color: var(--text); }
+.segmented button.ativo { background: var(--accent); color: #1a1405; }
+
+.dica {
+  font-size: .78rem;
+  color: var(--text-faint);
+  margin: 0;
+  line-height: 1.5;
+}
+.dica b { color: var(--text-dim); }
+
+.palco { display: flex; justify-content: center; }
+
+/* =====================================================================
+   O CARTÃO — tudo aqui vira a imagem (largura fixa de 400px)
+   ===================================================================== */
+
+.card-print {
+  width: 400px;
+  background: #161a23;
+  border: 1px solid #2c3444;
+  border-radius: 16px;
+  padding: 20px 18px;
+  color: #e8ecf3;
+  font-family: var(--font);
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------ Cabeçalho */
+.p-head {
+  display: flex; align-items: center; gap: 11px;
+  padding-bottom: 14px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #2c3444;
+}
+.p-logo {
+  height: 40px;
+  width: auto;
+  max-width: 92px;
+  flex: none;
+  object-fit: contain;
+}
+.p-tit { min-width: 0; flex: 1; }
+.p-tit h1 {
+  font-size: 1.02rem; font-weight: 700; margin: 0 0 2px;
+  line-height: 1.25; letter-spacing: -.01em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.p-tit .p-sub { font-size: .73rem; color: #6b7688; margin: 0; }
+
+/* ----------------------------------------------------------------- Hero */
+.p-hero { margin-bottom: 16px; }
+.p-hero-rot {
+  font-size: .67rem; text-transform: uppercase; letter-spacing: .1em;
+  color: #6b7688; font-weight: 700; margin-bottom: 3px;
+}
+.p-hero-valor {
+  font-size: 2.1rem; font-weight: 800; line-height: 1;
+  letter-spacing: -.035em;
+  color: #34d399;
+  font-variant-numeric: tabular-nums;
+}
+.p-hero-de { font-size: .78rem; color: #9aa5b8; margin-top: 5px; }
+.p-hero-de b { color: #e8ecf3; }
+
+.p-bar {
+  height: 11px;
+  background: #232936;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.p-bar > i { display: block; height: 100%; border-radius: 999px; background: #f0b429; }
+.p-bar-leg {
+  display: flex; justify-content: space-between;
+  font-size: .72rem; color: #9aa5b8; margin-top: 6px;
+}
+.p-bar-leg b { color: #e8ecf3; font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------------------- Caixinhas */
+.p-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.p-box {
+  background: #1c212c;
+  border: 1px solid #232a38;
+  border-radius: 10px;
+  padding: 10px 11px;
+}
+.p-box .r {
+  font-size: .64rem; text-transform: uppercase; letter-spacing: .07em;
+  color: #6b7688; font-weight: 700;
+}
+.p-box .v {
+  font-size: 1.04rem; font-weight: 700; margin-top: 2px;
+  font-variant-numeric: tabular-nums; letter-spacing: -.02em;
+}
+
+/* --------------------------------------------------------------- Chips */
+.p-chips {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 14px;
+}
+.p-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: .7rem; font-weight: 700;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+.p-chip i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: currentColor;
+  display: inline-block;
+}
+.p-chip b { font-variant-numeric: tabular-nums; }
+
+/* -------------------------------------------------------------- Secções */
+.p-sec-tit {
+  font-size: .68rem; text-transform: uppercase; letter-spacing: .09em;
+  color: #6b7688; font-weight: 700;
+  margin: 0 0 9px;
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.p-sec-tit span { text-transform: none; letter-spacing: 0; font-weight: 500; }
+
+.p-divisor { height: 1px; background: #2c3444; margin: 16px 0; }
+
+/* -------------------------------------------------------------- Ranking */
+.p-rank { display: grid; gap: 4px; }
+.p-rank.duas { grid-template-columns: 1fr 1fr; gap: 4px 8px; }
+
+.p-linha {
+  display: flex; align-items: center; gap: 7px;
+  background: #1c212c;
+  border-left: 3px solid #6b7688;
+  border-radius: 6px;
+  padding: 6px 9px;
+  min-width: 0;
+}
+.p-pos {
+  font-size: .68rem; font-weight: 700;
+  color: #6b7688;
+  min-width: 15px;
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+.p-nome {
+  flex: 1; min-width: 0;
+  font-size: .8rem; font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.p-val {
+  font-size: .8rem; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  flex: none;
+}
+.p-pc {
+  font-size: .64rem; color: #6b7688; font-weight: 600;
+  min-width: 26px; text-align: right;
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Versão compacta quando há muita gente */
+.p-rank.compacto .p-linha { padding: 4px 8px; gap: 6px; }
+.p-rank.compacto .p-nome { font-size: .73rem; }
+.p-rank.compacto .p-val  { font-size: .73rem; }
+.p-rank.compacto .p-pos  { font-size: .62rem; min-width: 13px; }
+.p-rank.compacto .p-pc   { display: none; }
+
+/* ------------------------------------------------------- Lista de gastos */
+.p-gastos { display: grid; gap: 5px; }
+.p-gasto {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .78rem;
+}
+.p-gasto .g-nome {
+  flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: #9aa5b8;
+}
+.p-gasto .g-val { font-variant-numeric: tabular-nums; font-weight: 600; flex: none; }
+.p-gasto .g-tag {
+  font-size: .62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .04em;
+  padding: 1px 6px; border-radius: 999px;
+  border: 1px solid currentColor;
+  flex: none;
+}
+
+/* ---------------------------------------------------------------- Rodapé */
+.p-foot {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #2c3444;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px;
+  font-size: .68rem; color: #6b7688;
+}
+.p-foot .p-site {
+  color: #f0b429; font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ------------------------------------------------------------- Pequenas */
+@media (max-width: 440px) {
+  .resumo-body { padding: 16px 8px 40px; }
+  .card-print { width: 100%; max-width: 400px; }
+}
